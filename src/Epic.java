@@ -2,43 +2,43 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 class Epic extends Task{
-    private ArrayList<Integer> subtasksList;
+    private ArrayList<Integer> subtasksId;
 
     public Epic(String name) {
-        this.id = 0;
+        this.setId(0);
         this.name = name;
-        this.subtasksList = new ArrayList<>();
+        this.subtasksId = new ArrayList<>();
         this.status = "NEW";
     }
 
     public Epic(Epic epic) {
-        this.id = epic.id;
+        this.setId(epic.getId());
         this.name = epic.name;
         this.status = epic.status;
     }
 
     public ArrayList<Integer> getSubtasksList() {
-        return subtasksList;
+        return subtasksId;
     }
 
     public void setSubtaskIdList(int id) {
-        this.subtasksList.add(id);
+        this.subtasksId.add(id);
     }
 
     public void checkEpicStatus(HashMap<Integer, Subtask> allSubtasks) {
 
-        if (subtasksList.isEmpty()) { // если Subtask'ов нет -> всегда "NEW"
+        if (subtasksId.isEmpty()) { // если Subtask'ов нет -> всегда "NEW"
             this.status = "NEW";
             return;
         }
 
-        for (int id : subtasksList) {
+        for (int id : subtasksId) {
             if (!allSubtasks.get(id).getStatus().equals("NEW")) { // если не "NEW" -> "IN_PROGRESS"
                 this.status = "IN_PROGRESS";
                 break;
             }
         }
-        for (int id : subtasksList) {
+        for (int id : subtasksId) {
             if (!allSubtasks.get(id).getStatus().equals("DONE")) {
                 return;
             }
@@ -47,12 +47,12 @@ class Epic extends Task{
     }
 
     public void clearAllSubtasks() {
-        this.subtasksList.clear();
+        this.subtasksId.clear();
     }
     public String toString(TaskManager taskManager) {
-        String component = "Задача: id = '" + id + "', name = '" + name + "', description = '" + description +
+        String component = "Задача: id = '" + getId() + "', name = '" + name + "', description = '" + description +
                 "status = '" + status + "'.\n";
-        for (Integer id: subtasksList){
+        for (Integer id: subtasksId){
             component += taskManager.getSubtaskById(id).toString();
         }
         return component;

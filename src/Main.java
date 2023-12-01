@@ -4,11 +4,12 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-
         TaskManager taskManager = new TaskManager();
+        taskContent(taskManager); // наполнение и работа с задачами
+    }
 
-        // Список статусов задачи
-        ArrayList<String> statusList = new ArrayList<>();
+    public static void taskContent(TaskManager taskManager) {
+        ArrayList<String> statusList = new ArrayList<>(); // Список статусов задачи
         statusList.add("NEW");
         statusList.add("IN_PROGRESS");
         statusList.add("DONE");
@@ -121,7 +122,6 @@ public class Main {
             }
         }
     }
-
     private static void printMenu() {
         System.out.println("Меню:");
         System.out.println("1 - Получить список всех Tasks");

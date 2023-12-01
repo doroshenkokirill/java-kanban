@@ -21,7 +21,7 @@ class Subtask extends Task{
 
 
     public String toString() {
-        return "Задача: id = '" + id + "', name = '" + name + "', description = '" + description +
+        return "Задача: id = '" + getId() + "', name = '" + name + "', description = '" + description +
                 "', status = '" + status + "'.\n";
     }
 }
