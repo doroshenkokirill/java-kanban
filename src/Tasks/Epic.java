@@ -1,24 +1,16 @@
 package Tasks;
-
 import Manager.TaskManager;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Epic extends Task {
-    private ArrayList<Integer> subtasksId;
+    private final ArrayList<Integer> subtasksId;
 
     public Epic(String name) {
         this.setId(0);
-        this.name = name;
+        this.setName(name);
         this.subtasksId = new ArrayList<>();
-        this.status = "NEW";
-    }
-
-    public Epic(Epic epic) {
-        this.setId(epic.getId());
-        this.name = epic.name;
-        this.status = epic.status;
+        this.setStatus("NEW");
     }
 
     public ArrayList<Integer> getSubtasksList() {
@@ -32,13 +24,13 @@ public class Epic extends Task {
     public void checkEpicStatus(HashMap<Integer, Subtask> allSubtasks) {
 
         if (subtasksId.isEmpty()) { // если Subtask'ов нет -> всегда "NEW"
-            this.status = "NEW";
+            this.setStatus("NEW");
             return;
         }
 
         for (int id : subtasksId) {
             if (!allSubtasks.get(id).getStatus().equals("NEW")) { // если не "NEW" -> "IN_PROGRESS"
-                this.status = "IN_PROGRESS";
+                this.setStatus("IN_PROGRESS");
                 break;
             }
         }
@@ -47,15 +39,16 @@ public class Epic extends Task {
                 return;
             }
         }
-        this.status = "DONE";
+        this.setStatus("DONE");
     }
 
     public void clearAllSubtasks() {
         this.subtasksId.clear();
     }
+
     public String toString(TaskManager taskManager) {
-        String component = "Задача: id = '" + getId() + "', name = '" + name + "', description = '" + description +
-                "status = '" + status + "'.\n";
+        String component = "Задача: id = '" + getId() + "', name = '" + getName() + "', description = '" + getDescription() +
+                "status = '" + getStatus() + "'.\n";
         for (Integer id: subtasksId){
             component += taskManager.getSubtaskById(id).toString();
         }

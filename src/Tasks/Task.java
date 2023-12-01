@@ -3,7 +3,7 @@ package Tasks;
 public class Task {
 
     private int id;
-    protected String name, description, status;
+    private String name, description, status;
 
     public Task() {
     }
@@ -52,7 +52,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Задача: id = '" + id + "', name = '" + name + "', description = '" + description +
-                "', status = '" + status + "'.";
+        return "Задача: id = '" + getId() + "', name = '" + getName() + "', description = '" + getDescription() +
+                "', status = '" + getStatus() + "'.";
     }
 }

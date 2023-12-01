@@ -10,7 +10,6 @@ import java.util.HashMap;
 public class TaskManager {
     private HashMap<Integer, Task> allTasks = new HashMap<>();
     private HashMap<Integer, Epic> allEpics = new HashMap<>();
-
     private HashMap<Integer, Subtask> allSubtasks = new HashMap<>();
     private int id = 0;
 
@@ -110,7 +109,7 @@ public class TaskManager {
         allTasks.remove(id);
     }
 
-    public void removeEpicById(int id) { // нужно удалить все Tasks.Subtask которые относились к Epiс'у
+    public void removeEpicById(int id) { // нужно удалить все Subtask которые относились к Epiс'у
         if (!allEpics.containsKey(id)) {
             return;
         }
@@ -129,6 +128,7 @@ public class TaskManager {
 
     public HashMap<Integer, Subtask> getSubtasksByEpicId(int id) {
         HashMap<Integer, Subtask> subtasks = new HashMap<>();
+
         if (allEpics.get(id).getSubtasksList().isEmpty()) {
             return null;
         }
