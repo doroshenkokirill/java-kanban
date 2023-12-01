@@ -1,7 +1,13 @@
+package Manager;
+
+import Tasks.Task;
+import Tasks.Epic;
+import Tasks.Subtask;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-class TaskManager {
+public class TaskManager {
     private HashMap<Integer, Task> allTasks = new HashMap<>();
     private HashMap<Integer, Epic> allEpics = new HashMap<>();
 
@@ -55,24 +61,24 @@ class TaskManager {
     }
 
     public void updateTask(Task task, String status) {
-        task.status = status;
+        task.setStatus(status);
         allTasks.put(task.getId(), task);
     }
 
     public void updateSubtask(Subtask subtask, String status) {
-        subtask.status=status;
+        subtask.setStatus(status);
         allSubtasks.put(subtask.getId(), subtask);
         allEpics.get(subtask.getEpicId()).checkEpicStatus(allSubtasks);
     }
 
     public void updateEpic(Epic epic, String status) {
-        epic.status = status;
+        epic.setStatus(status);
         allEpics.put(epic.getId(), epic);
         for (int id : epic.getSubtasksList()) {
             if (getTaskById(id) == null) {
                 continue;
             }
-            getTaskById(id).status = status;
+            getTaskById(id).setStatus(status);
         }
     }
 
@@ -104,7 +110,7 @@ class TaskManager {
         allTasks.remove(id);
     }
 
-    public void removeEpicById(int id) { // нужно удалить все Subtask которые относились к Epiс'у
+    public void removeEpicById(int id) { // нужно удалить все Tasks.Subtask которые относились к Epiс'у
         if (!allEpics.containsKey(id)) {
             return;
         }
@@ -121,8 +127,8 @@ class TaskManager {
         allSubtasks.remove(id);
     }
 
-    public HashMap<Integer,Subtask> getSubtasksByEpicId(int id) {
-        HashMap<Integer,Subtask> subtasks = new HashMap<>();
+    public HashMap<Integer, Subtask> getSubtasksByEpicId(int id) {
+        HashMap<Integer, Subtask> subtasks = new HashMap<>();
         if (allEpics.get(id).getSubtasksList().isEmpty()) {
             return null;
         }

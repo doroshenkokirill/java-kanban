@@ -1,4 +1,6 @@
-class Subtask extends Task{
+package Tasks;
+
+public class Subtask extends Task {
 
     private int epicId;
 
@@ -19,7 +21,7 @@ class Subtask extends Task{
         this.epicId = epicId;
     }
 
-
+    @Override
     public String toString() {
         return "Задача: id = '" + getId() + "', name = '" + name + "', description = '" + description +
                 "', status = '" + status + "'.\n";

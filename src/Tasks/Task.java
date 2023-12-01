@@ -1,4 +1,6 @@
-class Task {
+package Tasks;
+
+public class Task {
 
     private int id;
     protected String name, description, status;
@@ -33,11 +35,11 @@ class Task {
     public void setDescription(String description) {
         this.description = description;
     }
-    protected int getId() {
+    public int getId() {
         return id;
     }
 
-    protected void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

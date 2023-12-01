@@ -1,7 +1,11 @@
+package Tasks;
+
+import Manager.TaskManager;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-class Epic extends Task{
+public class Epic extends Task {
     private ArrayList<Integer> subtasksId;
 
     public Epic(String name) {

@@ -1,3 +1,8 @@
+import Tasks.Epic;
+import Tasks.Subtask;
+import Tasks.Task;
+import Manager.TaskManager;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,7 +19,7 @@ public class Main {
         statusList.add("IN_PROGRESS");
         statusList.add("DONE");
 
-        // Task с 2 задачами
+        // Tasks.Task с 2 задачами
         ArrayList<String> tasksList = new ArrayList<>();
         tasksList.add("Помыть посуду");
         Task task = new Task("Задача - 1: ", tasksList.get(0));
@@ -24,7 +29,7 @@ public class Main {
         Task task1 = new Task("Задача - 2: ", tasksList1.get(0));
         taskManager.createNewTask(task1);
 
-        // Epic с 2 подзадачами
+        // Tasks.Epic с 2 подзадачами
         Epic epic = new Epic("Сбор вещей для переезда");
         taskManager.createNewEpic(epic);
         ArrayList<String> subtasksList = new ArrayList<>();
@@ -73,7 +78,7 @@ public class Main {
 
                 case 5:
                     taskManager.clearAllSubtasks();
-                    taskManager.clearAllEpics(); // Удаляем все Epics - если удалены все Epic удаляются и Subtask
+                    taskManager.clearAllEpics(); // Удаляем все Epics - если удалены все Tasks.Epic удаляются и Tasks.Subtask
                     System.out.println("Список Epics после удаления:");
                     System.out.println(taskManager.getAllEpics()); // проверка наличия
                     break;
@@ -85,21 +90,21 @@ public class Main {
                     break;
 
                 case 7:
-                    System.out.println("Task с id = '2':");
-                    System.out.println(taskManager.getTaskById(2)); // вывод Task с id = '2'
-                    System.out.println("Epic с id = '3':");
-                    System.out.println(taskManager.getEpicById(3)); // вывод Epic с id = '3'
-                    System.out.println("Subtask с id = '7':");
-                    System.out.println(taskManager.getSubtaskById(7)); // вывод Subtask с id = '7'
+                    System.out.println("Tasks.Task с id = '2':");
+                    System.out.println(taskManager.getTaskById(2)); // вывод Tasks.Task с id = '2'
+                    System.out.println("Tasks.Epic с id = '3':");
+                    System.out.println(taskManager.getEpicById(3)); // вывод Tasks.Epic с id = '3'
+                    System.out.println("Tasks.Subtask с id = '7':");
+                    System.out.println(taskManager.getSubtaskById(7)); // вывод Tasks.Subtask с id = '7'
                     break;
 
                 case 8:
-                    taskManager.removeTaskById(2); // Удаляем Task с id = '2'
-                    System.out.println("Task с id = '2' удалена.");
-                    taskManager.removeEpicById(3); // Удаляем Epic с id = '3'
-                    System.out.println("Epic с id = '3' удалена.");
-                    taskManager.removeSubtaskById(7); // Удаляем Subtask с id = '7'
-                    System.out.println("Subtask с id = '7' удалена.");
+                    taskManager.removeTaskById(2); // Удаляем Tasks.Task с id = '2'
+                    System.out.println("Tasks.Task с id = '2' удалена.");
+                    taskManager.removeEpicById(3); // Удаляем Tasks.Epic с id = '3'
+                    System.out.println("Tasks.Epic с id = '3' удалена.");
+                    taskManager.removeSubtaskById(7); // Удаляем Tasks.Subtask с id = '7'
+                    System.out.println("Tasks.Subtask с id = '7' удалена.");
                     break;
 
                 case 9:
@@ -109,8 +114,8 @@ public class Main {
                     break;
 
                 case 10:
-                    System.out.println("Список Subtask в Epic с id = '3':");
-                    System.out.println(taskManager.getSubtasksByEpicId(3)); // вызываем все Subtask в Epic c id = '6'
+                    System.out.println("Список Tasks.Subtask в Tasks.Epic с id = '3':");
+                    System.out.println(taskManager.getSubtasksByEpicId(3)); // вызываем все Tasks.Subtask в Tasks.Epic c id = '6'
                     break;
 
                 case 11:
@@ -133,7 +138,7 @@ public class Main {
         System.out.println("7 - Вывод задачи по id");
         System.out.println("8 - Удаление задачи по id");
         System.out.println("9 - Перезапись задачи");
-        System.out.println("10 - Получение Subtasks для Epic");
+        System.out.println("10 - Получение Subtasks для Tasks.Epic");
         System.out.println("11 - Выход");
     }
 }
