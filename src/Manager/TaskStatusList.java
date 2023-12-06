@@ -1,6 +1,6 @@
 package Manager;
 
-public enum StatusList {
+public enum TaskStatusList {
     NEW,
     IN_PROGRESS,
     DONE

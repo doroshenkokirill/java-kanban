@@ -1,4 +1,4 @@
-import Manager.StatusList;
+import Manager.TaskStatusList;
 import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
@@ -105,9 +105,9 @@ public class Main {
                     break;
 
                 case 9:
-                    taskManager.updateTask(task, String.valueOf(StatusList.DONE)); // присваиваем task статус "DONE"
-                    taskManager.updateEpic(epic1, String.valueOf(StatusList.IN_PROGRESS)); // присваиваем epic1 статус "IN_PROGRESS"
-                    taskManager.updateSubtask(subtask2, String.valueOf(StatusList.DONE)); // присваиваем subtask2 статус "DONE"
+                    taskManager.updateTask(task, String.valueOf(TaskStatusList.DONE)); // присваиваем task статус "DONE"
+                    taskManager.updateEpic(epic1, String.valueOf(TaskStatusList.IN_PROGRESS)); // присваиваем epic1 статус "IN_PROGRESS"
+                    taskManager.updateSubtask(subtask2, String.valueOf(TaskStatusList.DONE)); // присваиваем subtask2 статус "DONE"
                     break;
 
                 case 10:
