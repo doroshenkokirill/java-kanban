@@ -19,9 +19,9 @@ public interface TaskManager {
     void clearAllTasks();
     void clearAllEpics();
     void clearAllSubtasks();
-    void updateTask(Task task, String status);
-    void updateSubtask(Subtask subtask, String status);
-    void updateEpic(Epic epic, String status);
+    void updateTask(Task task, TaskStatusList status);
+    void updateSubtask(Subtask subtask, TaskStatusList status);
+    void updateEpic(Epic epic, TaskStatusList status);
     Task getTaskById(int id);
     Epic getEpicById(int id);
     Subtask getSubtaskById(int id);

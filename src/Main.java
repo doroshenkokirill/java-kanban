@@ -1,3 +1,4 @@
+import Manager.Manager;
 import Manager.TaskStatusList;
 import Tasks.Epic;
 import Tasks.Subtask;
@@ -10,7 +11,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        InMemoryTaskManager taskManager = Manager.getDefault();
         taskContent(taskManager); // наполнение и работа с задачами
     }
 
@@ -105,9 +106,9 @@ public class Main {
                     break;
 
                 case 9:
-                    taskManager.updateTask(task, String.valueOf(TaskStatusList.DONE)); // присваиваем task статус "DONE"
-                    taskManager.updateEpic(epic1, String.valueOf(TaskStatusList.IN_PROGRESS)); // присваиваем epic1 статус "IN_PROGRESS"
-                    taskManager.updateSubtask(subtask2, String.valueOf(TaskStatusList.DONE)); // присваиваем subtask2 статус "DONE"
+                    taskManager.updateTask(task, TaskStatusList.DONE); // присваиваем task статус "DONE"
+                    taskManager.updateEpic(epic1, TaskStatusList.IN_PROGRESS); // присваиваем epic1 статус "IN_PROGRESS"
+                    taskManager.updateSubtask(subtask2, TaskStatusList.DONE); // присваиваем subtask2 статус "DONE"
                     break;
 
                 case 10:
@@ -116,6 +117,9 @@ public class Main {
                     break;
 
                 case 11:
+                    System.out.println("История просмотров (10 последних):");
+
+                case 12:
                     scanner.close();
                     return;
 
@@ -136,6 +140,7 @@ public class Main {
         System.out.println("8 - Удаление задачи по id");
         System.out.println("9 - Перезапись задачи");
         System.out.println("10 - Получение Subtasks для Tasks.Epic");
-        System.out.println("11 - Выход");
+        System.out.println("11 - Показать историю просмотров");
+        System.out.println("12 - Выход");
     }
 }

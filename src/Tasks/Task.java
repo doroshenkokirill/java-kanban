@@ -5,21 +5,17 @@ import Manager.TaskStatusList;
 public class Task {
 
     private int id;
-    private String name, description, status;
+    private String name;
+    private String description;
+    private TaskStatusList status;
 
     public Task() {
-    }
-    public Task(Task task) {
-        this.name = task.name;
-        this.description = task.description;
-        this.id = task.id;
-        this.status = task.status;
     }
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        this.status = String.valueOf(TaskStatusList.NEW);
+        this.status = TaskStatusList.NEW;
     }
 
     public String getName() {
@@ -34,9 +30,6 @@ public class Task {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
     public int getId() {
         return id;
     }
@@ -45,10 +38,10 @@ public class Task {
         this.id = id;
     }
 
-    protected String getStatus() {
+    protected TaskStatusList getStatus() {
         return status;
     }
-    public void setStatus(String status) {
+    public void setStatus(TaskStatusList status) {
         this.status = status;
     }
 
