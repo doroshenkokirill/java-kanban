@@ -1,3 +1,4 @@
+import Manager.StatusList;
 import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
@@ -14,10 +15,6 @@ public class Main {
     }
 
     public static void taskContent(TaskManager taskManager) {
-        ArrayList<String> statusList = new ArrayList<>(); // Список статусов задачи
-        statusList.add("NEW");
-        statusList.add("IN_PROGRESS");
-        statusList.add("DONE");
 
         // Tasks.Task с 2 задачами
         ArrayList<String> tasksList = new ArrayList<>();
@@ -108,9 +105,9 @@ public class Main {
                     break;
 
                 case 9:
-                    taskManager.updateTask(task, statusList.get(2)); // присваиваем task статус "DONE"
-                    taskManager.updateEpic(epic1, statusList.get(1)); // присваиваем epic1 статус "IN_PROGRESS"
-                    taskManager.updateSubtask(subtask2, statusList.get(2)); // присваиваем subtask2 статус "DONE"
+                    taskManager.updateTask(task, String.valueOf(StatusList.DONE)); // присваиваем task статус "DONE"
+                    taskManager.updateEpic(epic1, String.valueOf(StatusList.IN_PROGRESS)); // присваиваем epic1 статус "IN_PROGRESS"
+                    taskManager.updateSubtask(subtask2, String.valueOf(StatusList.DONE)); // присваиваем subtask2 статус "DONE"
                     break;
 
                 case 10:

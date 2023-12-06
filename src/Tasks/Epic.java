@@ -1,4 +1,5 @@
 package Tasks;
+import Manager.StatusList;
 import Manager.TaskManager;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +11,7 @@ public class Epic extends Task {
         this.setId(0);
         this.setName(name);
         this.subtasksId = new ArrayList<>();
-        this.setStatus("NEW");
+        this.setStatus(String.valueOf(StatusList.NEW));
     }
 
     public ArrayList<Integer> getSubtasksList() {
@@ -24,22 +25,22 @@ public class Epic extends Task {
     public void checkEpicStatus(HashMap<Integer, Subtask> allSubtasks) {
 
         if (subtasksId.isEmpty()) { // если Subtask'ов нет -> всегда "NEW"
-            this.setStatus("NEW");
+            this.setStatus(String.valueOf(StatusList.NEW));
             return;
         }
 
         for (int id : subtasksId) {
-            if (!allSubtasks.get(id).getStatus().equals("NEW")) { // если не "NEW" -> "IN_PROGRESS"
-                this.setStatus("IN_PROGRESS");
+            if (!allSubtasks.get(id).getStatus().equals(String.valueOf(StatusList.NEW))) { // если не "NEW" -> "IN_PROGRESS"
+                this.setStatus(String.valueOf(StatusList.IN_PROGRESS));
                 break;
             }
         }
         for (int id : subtasksId) {
-            if (!allSubtasks.get(id).getStatus().equals("DONE")) {
+            if (!allSubtasks.get(id).getStatus().equals(String.valueOf(StatusList.DONE))) {
                 return;
             }
         }
-        this.setStatus("DONE");
+        this.setStatus(String.valueOf(StatusList.DONE));
     }
 
     public void clearAllSubtasks() {

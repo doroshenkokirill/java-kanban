@@ -1,5 +1,7 @@
 package Tasks;
 
+import Manager.StatusList;
+
 public class Task {
 
     private int id;
@@ -17,7 +19,7 @@ public class Task {
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        this.status = "NEW";
+        this.status = String.valueOf(StatusList.NEW);
     }
 
     public String getName() {
