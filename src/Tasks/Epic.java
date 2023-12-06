@@ -1,6 +1,6 @@
 package Tasks;
 import Manager.TaskStatusList;
-import Manager.TaskManager;
+import Manager.InMemoryTaskManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -47,7 +47,7 @@ public class Epic extends Task {
         this.subtasksId.clear();
     }
 
-    public String toString(TaskManager taskManager) {
+    public String toString(InMemoryTaskManager taskManager) {
         String component = "Задача: id = '" + getId() + "', name = '" + getName() + "', description = '" + getDescription() +
                 "status = '" + getStatus() + "'.\n";
         for (Integer id: subtasksId){
