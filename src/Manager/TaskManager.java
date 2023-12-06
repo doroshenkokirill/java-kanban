@@ -6,6 +6,7 @@ import Tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public interface TaskManager {
     void createNewTask(Task task);
@@ -29,4 +30,5 @@ public interface TaskManager {
     void removeEpicById(int id);
     void removeSubtaskById(int id);
     HashMap<Integer, Subtask> getSubtasksByEpicId(int id);
+    List<Task> getHistory();
 }

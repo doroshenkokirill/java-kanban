@@ -117,8 +117,22 @@ public class Main {
                     break;
 
                 case 11:
+                    taskManager.getTaskById(1); // вызываю 11 задач
+                    taskManager.getTaskById(2);
+                    taskManager.getEpicById(3);
+                    taskManager.getTaskById(1);
+                    taskManager.getTaskById(2);
+                    taskManager.getEpicById(3);
+                    taskManager.getTaskById(1);
+                    taskManager.getTaskById(2);
+                    taskManager.getEpicById(3);
+                    taskManager.getTaskById(1);
+                    taskManager.getSubtaskById(7);
                     System.out.println("История просмотров (10 последних):");
-
+                    for (Task someTask: taskManager.getHistory()) {
+                        System.out.println(someTask);
+                    }
+                    break;
                 case 12:
                     scanner.close();
                     return;
@@ -140,7 +154,7 @@ public class Main {
         System.out.println("8 - Удаление задачи по id");
         System.out.println("9 - Перезапись задачи");
         System.out.println("10 - Получение Subtasks для Tasks.Epic");
-        System.out.println("11 - Показать историю просмотров");
+        System.out.println("11 - Показать историю просмотров задач");
         System.out.println("12 - Выход");
     }
 }
