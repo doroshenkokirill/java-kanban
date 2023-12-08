@@ -112,7 +112,7 @@ public class Main {
 
                 case 10:
                     System.out.println("Список Tasks.Subtask в Tasks.Epic с id = '3':");
-                    System.out.println(taskManager.getSubtasksByEpicId(3)); // вызываем все Tasks.Subtask в Tasks.Epic c id = '6'
+                    System.out.println(taskManager.getSubtasksByEpicId(3)); // вызываем все Subtask в Epic c id = '6'
                     break;
 
                 case 11:
