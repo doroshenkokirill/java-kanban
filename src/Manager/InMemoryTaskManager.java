@@ -1,5 +1,7 @@
 package Manager;
 
+import Interfaces.HistoryManager;
+import Interfaces.TaskManager;
 import Tasks.Task;
 import Tasks.Epic;
 import Tasks.Subtask;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class InMemoryTaskManager implements TaskManager{
+public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Task> allTasks = new HashMap<>();
     private final HashMap<Integer, Epic> allEpics = new HashMap<>();
     private final HashMap<Integer, Subtask> allSubtasks = new HashMap<>();
