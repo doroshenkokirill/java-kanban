@@ -6,7 +6,6 @@ import Tasks.Task;
 import Tasks.TaskStatusList;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public interface TaskManager {
