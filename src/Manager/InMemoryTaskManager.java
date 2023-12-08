@@ -153,15 +153,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public HashMap<Integer, Subtask> getSubtasksByEpicId(int id) {
-        HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    public ArrayList getSubtasksByEpicId(int id) {
+        ArrayList<Subtask> subtasks = new ArrayList<>();
 
         if (allEpics.get(id).getSubtasksList().isEmpty()) {
             return null;
         }
         for (int i = 0; i < allEpics.get(id).getSubtasksList().size(); i++) {
-            subtasks.put(allEpics.get(id).getSubtasksList().get(i),
-                    allSubtasks.get(allEpics.get(id).getSubtasksList().get(i)));
+            subtasks.add(allSubtasks.get(allEpics.get(id).getSubtasksList().get(i)));
         }
         return subtasks;
     }
