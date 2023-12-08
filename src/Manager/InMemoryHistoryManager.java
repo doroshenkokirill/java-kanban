@@ -8,6 +8,7 @@ import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private final List<Task> browsingHistory = new ArrayList<>();
+
     @Override
     public void add(Task task) { // наполнение истории
         int historySize = 10;

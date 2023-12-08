@@ -1,20 +1,20 @@
+import Interfaces.TaskManager;
 import Manager.Manager;
 import Tasks.TaskStatusList;
 import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
-import Manager.InMemoryTaskManager;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        InMemoryTaskManager taskManager = Manager.getDefault();
+        TaskManager taskManager = Manager.getDefault();
         taskContent(taskManager); // наполнение и работа с задачами
     }
 
-    public static void taskContent(InMemoryTaskManager taskManager) {
+    public static void taskContent(TaskManager taskManager) {
 
         // Tasks.Task с 2 задачами
         ArrayList<String> tasksList = new ArrayList<>();
