@@ -1,7 +1,5 @@
 package Tasks;
 
-import Manager.TaskStatusList;
-
 public class Task {
 
     private int id;

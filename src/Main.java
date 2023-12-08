@@ -1,5 +1,5 @@
 import Manager.Manager;
-import Manager.TaskStatusList;
+import Tasks.TaskStatusList;
 import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
         InMemoryTaskManager taskManager = Manager.getDefault();
         taskContent(taskManager); // наполнение и работа с задачами
