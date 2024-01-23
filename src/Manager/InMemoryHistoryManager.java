@@ -20,7 +20,10 @@ public class InMemoryHistoryManager implements HistoryManager {
             browsingHistory.removeFirst(); // записей > 10 => удаляем 1-й элемент
         }
     }
-
+    @Override
+    public void remove(int id) {
+        browsingHistory.remove(id);
+    }
     @Override
     public List<Task> getHistory() {
         return new ArrayList<>(browsingHistory);
