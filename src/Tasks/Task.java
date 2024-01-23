@@ -1,9 +1,10 @@
-package Tasks;
+package tasks;
 
 public class Task {
 
     private int id;
     private String name;
+
     private String description;
     private TaskStatusList status;
 
@@ -28,6 +29,9 @@ public class Task {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
     public int getId() {
         return id;
     }
@@ -36,9 +40,10 @@ public class Task {
         this.id = id;
     }
 
-    protected TaskStatusList getStatus() {
+    public TaskStatusList getStatus() {
         return status;
     }
+
     public void setStatus(TaskStatusList status) {
         this.status = status;
     }

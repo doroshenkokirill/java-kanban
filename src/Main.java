@@ -1,9 +1,9 @@
 import Interfaces.TaskManager;
-import Manager.Manager;
-import Tasks.TaskStatusList;
-import Tasks.Epic;
-import Tasks.Subtask;
-import Tasks.Task;
+import manager.Manager;
+import tasks.TaskStatusList;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,8 +15,7 @@ public class Main {
     }
 
     public static void taskContent(TaskManager taskManager) {
-
-        // Tasks.Task с 2 задачами
+        // Task с 2 задачами
         ArrayList<String> tasksList = new ArrayList<>();
         tasksList.add("Помыть посуду");
         Task task = new Task("Задача - 1: ", tasksList.get(0));
@@ -26,7 +25,7 @@ public class Main {
         Task task1 = new Task("Задача - 2: ", tasksList1.get(0));
         taskManager.createNewTask(task1);
 
-        // Tasks.Epic с 2 подзадачами
+        // Epic с 2 подзадачами
         Epic epic = new Epic("Сбор вещей для переезда");
         taskManager.createNewEpic(epic);
         ArrayList<String> subtasksList = new ArrayList<>();
@@ -45,115 +44,28 @@ public class Main {
         Subtask subtask2 = new Subtask(epic1.getId(), "Разбор вещей для переезда", subtasksList2.get(0));
         taskManager.createNewSubtask(subtask2);
 
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            printMenu();
-            System.out.println("Выберите команду:");
-            int command = scanner.nextInt();
+        /* Не до конца понял зачем удалять консольный интерфейс. Ведь удобно просто создать 1 раз все задачи и
+        каждый раз к нужной обращаться */
 
-            switch (command) {
-                case 1:
-                    System.out.println("Выводим все Tasks:");
-                    System.out.println(taskManager.getAllTasks());
-                    break;
+        // исправление и проверка setter
+        epic1.setStatus(TaskStatusList.DONE);
+        taskManager.updateEpic(epic1);
 
-                case 2:
-                    System.out.println("Выводим все Epics:");
-                    System.out.println(taskManager.getAllEpics());
-                    break;
-
-                case 3:
-                    System.out.println("Выводим все Subtasks:");
-                    System.out.println(taskManager.getAllSubtasks());
-                    break;
-
-                case 4:
-                    taskManager.clearAllSubtasks(); // Удаляем все Subtasks
-                    System.out.println("Список Subtasks после удаления:");
-                    System.out.println(taskManager.getAllSubtasks()); // проверка наличия
-                    break;
-
-                case 5:
-                    taskManager.clearAllSubtasks();
-                    taskManager.clearAllEpics(); // Удаляем все Epics - если удалены все Tasks.Epic удаляются и Tasks.Subtask
-                    System.out.println("Список Epics после удаления:");
-                    System.out.println(taskManager.getAllEpics()); // проверка наличия
-                    break;
-
-                case 6:
-                    taskManager.clearAllTasks(); // Удаляем все Tasks
-                    System.out.println("Список Tasks после удаления:");
-                    System.out.println(taskManager.getAllTasks()); // проверка наличия
-                    break;
-
-                case 7:
-                    System.out.println("Tasks.Task с id = '2':");
-                    System.out.println(taskManager.getTaskById(2)); // вывод Tasks.Task с id = '2'
-                    System.out.println("Tasks.Epic с id = '3':");
-                    System.out.println(taskManager.getEpicById(3)); // вывод Tasks.Epic с id = '3'
-                    System.out.println("Tasks.Subtask с id = '7':");
-                    System.out.println(taskManager.getSubtaskById(7)); // вывод Tasks.Subtask с id = '7'
-                    break;
-
-                case 8:
-                    taskManager.removeTaskById(2); // Удаляем Tasks.Task с id = '2'
-                    System.out.println("Tasks.Task с id = '2' удалена.");
-                    taskManager.removeEpicById(3); // Удаляем Tasks.Epic с id = '3'
-                    System.out.println("Tasks.Epic с id = '3' удалена.");
-                    taskManager.removeSubtaskById(7); // Удаляем Tasks.Subtask с id = '7'
-                    System.out.println("Tasks.Subtask с id = '7' удалена.");
-                    break;
-
-                case 9:
-                    taskManager.updateTask(task, TaskStatusList.DONE); // присваиваем task статус "DONE"
-                    taskManager.updateEpic(epic1, TaskStatusList.IN_PROGRESS); // присваиваем epic1 статус "IN_PROGRESS"
-                    taskManager.updateSubtask(subtask2, TaskStatusList.DONE); // присваиваем subtask2 статус "DONE"
-                    break;
-
-                case 10:
-                    System.out.println("Список Tasks.Subtask в Tasks.Epic с id = '3':");
-                    System.out.println(taskManager.getSubtasksByEpicId(3)); // вызываем все Subtask в Epic c id = '6'
-                    break;
-
-                case 11:
-                    taskManager.getTaskById(1); // вызываю 11 задач
-                    taskManager.getTaskById(2);
-                    taskManager.getEpicById(3);
-                    taskManager.getTaskById(1);
-                    taskManager.getTaskById(2);
-                    taskManager.getEpicById(3);
-                    taskManager.getTaskById(1);
-                    taskManager.getTaskById(2);
-                    taskManager.getEpicById(3);
-                    taskManager.getTaskById(1);
-                    taskManager.getSubtaskById(7);
-                    System.out.println("История просмотров (10 последних):");
-                    for (Task someTask: taskManager.getHistory()) {
-                        System.out.println(someTask);
-                    }
-                    break;
-                case 12:
-                    scanner.close();
-                    return;
-
-                default:
-                    System.out.println("Такой функции нет!");
-            }
+        //проверка истории
+        taskManager.getTaskById(1); // вызываю 11 задач
+        taskManager.getTaskById(2);
+        taskManager.getEpicById(3);
+        taskManager.getTaskById(1);
+        taskManager.getTaskById(2);
+        taskManager.getEpicById(3);
+        taskManager.getTaskById(1);
+        taskManager.getTaskById(2);
+        taskManager.getEpicById(3);
+        taskManager.getTaskById(1);
+        taskManager.getSubtaskById(7);
+        System.out.println("История просмотров (10 последних):");
+        for (Task someTask: taskManager.getHistory()) {
+            System.out.println(someTask);
         }
-    }
-    private static void printMenu() {
-        System.out.println("Меню:");
-        System.out.println("1 - Получить список всех Tasks");
-        System.out.println("2 - Получить список всех Epics");
-        System.out.println("3 - Получить список всех Subtasks");
-        System.out.println("4 - Удаление Subtasks");
-        System.out.println("5 - Удаление Epics");
-        System.out.println("6 - Удаление Tasks");
-        System.out.println("7 - Вывод задачи по id");
-        System.out.println("8 - Удаление задачи по id");
-        System.out.println("9 - Перезапись задачи");
-        System.out.println("10 - Получение Subtasks для Tasks.Epic");
-        System.out.println("11 - Показать историю просмотров задач");
-        System.out.println("12 - Выход");
     }
 }

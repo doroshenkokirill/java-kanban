@@ -1,7 +1,7 @@
-package Manager;
+package manager;
 
 import Interfaces.HistoryManager;
-import Tasks.Task;
+import tasks.Task;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -9,13 +9,14 @@ import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
+    private static final int MAX_HISTORY_SIZE = 10;
+
     private final LinkedList<Task> browsingHistory = new LinkedList<>();
 
     @Override
     public void add(Task task) { // наполнение истории
-        int historySize = 10;
         browsingHistory.addLast(task);
-        if (browsingHistory.size() > historySize) {
+        if (browsingHistory.size() > MAX_HISTORY_SIZE) {
             browsingHistory.removeFirst(); // записей > 10 => удаляем 1-й элемент
         }
     }

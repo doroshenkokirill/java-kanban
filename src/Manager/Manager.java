@@ -1,4 +1,4 @@
-package Manager;
+package manager;
 
 import Interfaces.HistoryManager;
 import Interfaces.TaskManager;

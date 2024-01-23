@@ -1,9 +1,9 @@
 package Interfaces;
 
-import Tasks.Epic;
-import Tasks.Subtask;
-import Tasks.Task;
-import Tasks.TaskStatusList;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
+import tasks.TaskStatusList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +28,11 @@ public interface TaskManager {
 
     void clearAllSubtasks();
 
-    void updateTask(Task task, TaskStatusList status);
+    void updateTask(Task task);
 
-    void updateSubtask(Subtask subtask, TaskStatusList status);
+    void updateSubtask(Subtask subtask);
 
-    void updateEpic(Epic epic, TaskStatusList status);
+    void updateEpic(Epic epic);
 
     Task getTaskById(int id);
 
