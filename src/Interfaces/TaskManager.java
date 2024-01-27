@@ -1,11 +1,8 @@
 package Interfaces;
 
-import tasks.Epic;
-import tasks.Subtask;
-import tasks.Task;
-import tasks.TaskStatusList;
-
-import java.util.ArrayList;
+import Tasks.Epic;
+import Tasks.Subtask;
+import Tasks.Task;
 import java.util.List;
 
 public interface TaskManager {
@@ -16,11 +13,11 @@ public interface TaskManager {
 
     void createNewEpic(Epic epic);
 
-    ArrayList<Task> getAllTasks();
+    List<Task> getAllTasks();
 
-    ArrayList<Subtask> getAllSubtasks();
+    List<Subtask> getAllSubtasks();
 
-    ArrayList<Epic> getAllEpics();
+    List<Epic> getAllEpics();
 
     void clearAllTasks();
 
@@ -46,7 +43,7 @@ public interface TaskManager {
 
     void removeSubtaskById(int id);
 
-    ArrayList<Subtask> getSubtasksByEpicId(int id);
+    List<Subtask> getSubtasksByEpicId(int id);
 
     List<Task> getHistory();
 }

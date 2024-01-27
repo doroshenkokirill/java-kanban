@@ -1,10 +1,11 @@
-package tasks;
-import manager.InMemoryTaskManager;
+package Tasks;
+import Manager.InMemoryTaskManager;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Epic extends Task {
-    private final ArrayList<Integer> subtasksId;
+    private final List<Integer> subtasksId;
 
     public Epic(String name) {
         this.setId(0);
@@ -13,7 +14,7 @@ public class Epic extends Task {
         this.setStatus(TaskStatusList.NEW);
     }
 
-    public ArrayList<Integer> getSubtasksList() {
+    public List<Integer> getSubtasksList() {
         return subtasksId;
     }
 
@@ -21,7 +22,7 @@ public class Epic extends Task {
         this.subtasksId.add(id);
     }
 
-    public void checkEpicStatus(HashMap<Integer, Subtask> allSubtasks) {
+    public void checkEpicStatus(Map<Integer, Subtask> allSubtasks) {
 
         if (subtasksId.isEmpty()) { // если Subtask'ов нет -> всегда "NEW"
             this.setStatus(TaskStatusList.NEW);
