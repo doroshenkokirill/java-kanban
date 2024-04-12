@@ -17,6 +17,10 @@ public class Subtask extends Task {
         this.epicId = epicId;
     }
 
+    public String toStringForFile() {
+        return String.format("%s,%s,%s,%s,%s,%s", getId(), TaskTypesList.SUBTASK, getName(), getStatus(), getDescription(), epicId);
+    }
+
     @Override
     public String toString() {
         return "Задача: id = '" + getId() + "', name = '" + getName() + "', description = '" + getDescription() +

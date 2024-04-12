@@ -1,5 +1,6 @@
 package Interfaces;
 
+import Manager.ManagerSaveException;
 import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
@@ -46,4 +47,6 @@ public interface TaskManager {
     List<Subtask> getSubtasksByEpicId(int id);
 
     List<Task> getHistory();
+
+    void save() throws ManagerSaveException;
 }
