@@ -4,7 +4,6 @@ public class Task {
 
     private int id;
     private String name;
-
     private String description;
     private TaskStatusList status;
 
@@ -46,6 +45,10 @@ public class Task {
 
     public void setStatus(TaskStatusList status) {
         this.status = status;
+    }
+
+    public String toStringForFile() {
+        return String.format("%s,%s,%s,%s,%s,%s", getId(), TaskTypesList.TASK, getName(), getStatus(), getDescription(), "");
     }
 
     @Override

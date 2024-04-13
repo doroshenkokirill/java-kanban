@@ -3,13 +3,14 @@ package Tests.TasksTests;
 import Interfaces.TaskManager;
 import Manager.Manager;
 import Tasks.Epic;
+import Tasks.TaskStatusList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 
 class EpicTest {
     TaskManager taskManager = Manager.getDefault();
-    Epic epic = new Epic("Epic description");
+    Epic epic = new Epic("Epic");
 
 
     @Test

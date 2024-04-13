@@ -47,6 +47,10 @@ public class Epic extends Task {
         this.subtasksId.clear();
     }
 
+    public String toStringForFile() {
+        return String.format("%s,%s,%s,%s,%s,%s", getId(), TaskTypesList.EPIC, getName(), getStatus(), getDescription(), "");
+    }
+
     public String toString(InMemoryTaskManager taskManager) {
         String component = "Задача: id = '" + getId() + "', name = '" + getName() + "', description = '" + getDescription() +
                 "status = '" + getStatus() + "'.\n";
