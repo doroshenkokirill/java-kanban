@@ -17,13 +17,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FileBackedTasksManagerTest {
-    private File file;
-    private TaskManager taskManager;
-    private HistoryManager historyManager;
+public class FileBackedTasksManagerTest {
+    protected File file;
+    protected TaskManager taskManager;
+    protected HistoryManager historyManager;
 
     @BeforeEach
-    public void createNewFile() throws IOException {
+    protected void createNewFile() throws IOException {
         file = File.createTempFile("tasksInfo", ".csv");
         taskManager = new FileBackedTasksManager(file);
         historyManager = new InMemoryHistoryManager();
@@ -31,14 +31,14 @@ class FileBackedTasksManagerTest {
 
     // проверка работы с пустым файлом
     @Test
-    public void saveEmptyFile() throws ManagerSaveException {
+    protected void saveEmptyFile() throws ManagerSaveException {
         taskManager.save();
         assertTrue(file.exists());
     }
 
     // проверка работы с записью файлов
     @Test
-    void testSaveAndLoadTasks() throws ManagerSaveException, IOException {
+    protected void testSaveAndLoadTasks() throws ManagerSaveException, IOException {
         FileBackedTasksManager taskManagerToFile = new FileBackedTasksManager(file);
 
         Task task1ForTest = new Task("Test Task1", "Description Task1 for Test");
@@ -58,7 +58,7 @@ class FileBackedTasksManagerTest {
     }
 
     @Test
-    void testHistory() throws ManagerSaveException {
+    protected void testHistory() throws ManagerSaveException {
         FileBackedTasksManager taskManagerToFile = new FileBackedTasksManager(file);
 
         Task task1ForTest = new Task("Test Task1", "Description Task1 for Test");

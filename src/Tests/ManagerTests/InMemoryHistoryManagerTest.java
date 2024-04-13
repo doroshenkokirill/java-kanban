@@ -10,13 +10,13 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-class InMemoryHistoryManagerTest {
-    TaskManager taskManager = Manager.getDefault();
-    List<Task> browsingHistory = taskManager.getHistory();
+public class InMemoryHistoryManagerTest {
+    protected TaskManager taskManager = Manager.getDefault();
+    protected List<Task> browsingHistory = taskManager.getHistory();
 
 
     @Test
-    void checkHistoryManagerSave() {
+    protected void checkHistoryManagerSave() {
         Task task = new Task("Task Test", "Task description");
         Epic epic = new Epic("Epic test");
         taskManager.createNewTask(task);

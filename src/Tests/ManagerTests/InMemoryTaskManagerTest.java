@@ -8,11 +8,11 @@ import Tasks.Task;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class InMemoryTaskManagerTest {
-    TaskManager taskManager = Manager.getDefault();
+public class InMemoryTaskManagerTest {
+    protected TaskManager taskManager = Manager.getDefault();
 
     @Test
-    void checkInMemoryTaskManagerByAddEachTypeOfTask() {
+    protected void checkInMemoryTaskManagerByAddEachTypeOfTask() {
         Task task = new Task("Task Test", "Task description");
         taskManager.createNewTask(task);
         Epic epic = new Epic("Epic for Subtask test");
@@ -25,7 +25,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void checkIdOfSubtasks() {
+    protected void checkIdOfSubtasks() {
         Epic epic = new Epic("Epic for Subtask test");
         taskManager.createNewEpic(epic);
         Subtask subtask = new Subtask(epic.getId(), "Subtask test", "Description of Subtask test");
@@ -36,7 +36,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void checkFieldsAfterAddInTaskManager() {
+    protected void checkFieldsAfterAddInTaskManager() {
         // Проверка Epic`а
         Epic epic = new Epic("Epic for Subtask test");
         String nameOfEpicBeforeTaskManager = epic.getName();
