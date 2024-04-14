@@ -3,24 +3,21 @@ package Tests.TasksTests;
 import Interfaces.TaskManager;
 import Manager.Manager;
 import Tasks.Epic;
-import Tasks.TaskStatusList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-
-class EpicTest {
-    TaskManager taskManager = Manager.getDefault();
-    Epic epic = new Epic("Epic");
-
+public class EpicTest {
+    protected TaskManager taskManager = Manager.getDefault();
+    protected Epic epic = new Epic("Epic");
 
     @Test
-    void compareEpicsById() { // Сравниваем Epic`и с одинаковым Id
-        taskManager.createNewTask(epic);
-        Assertions.assertEquals(epic.getId(), taskManager.getEpicById(epic.getId()).getId(), "Одинаковые Epic`и c одинаковыми Id");
+    protected void compareEpicsById() { // Сравниваем Epic`и с одинаковым Id
+        taskManager.createNewEpic(epic);
+        Assertions.assertEquals(epic.getId(), taskManager.getEpicById(epic.getId()).getId());
     }
 
     @Test
-    void addEpicLikeSubtask() {
+    protected void addEpicLikeSubtask() {
         taskManager.createNewEpic(epic);
         //taskManager.createNewSubtask(epic);
     }

@@ -4,18 +4,15 @@ import Interfaces.TaskManager;
 import Manager.Manager;
 import Tasks.Epic;
 import Tasks.Subtask;
-import Tasks.TaskStatusList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-
-class SubtaskTest {
-    TaskManager taskManager = Manager.getDefault();
-
+public class SubtaskTest {
+    protected TaskManager taskManager = Manager.getDefault();
+    protected Epic epic = new Epic( "Subtask Test");
 
     @Test
-    void compareSubtasksById() { // Сравниваем Epic`и с одинаковым Id
-        Epic epic = new Epic( "Subtask Test");
+    protected void compareSubtasksById() { // Сравниваем Epic`и с одинаковым Id
         taskManager.createNewEpic(epic);
         Subtask subtask = new Subtask(taskManager.getEpicById(epic.getId()).getId(), "Subtask test", "Description of Subtask test");
         taskManager.createNewSubtask(subtask);
@@ -23,8 +20,7 @@ class SubtaskTest {
     }
 
     @Test
-    void addSubtaskLikeEpic() {
-        Epic epic = new Epic("Subtask Test");
+    protected void addSubtaskLikeEpic() {
         taskManager.createNewEpic(epic);
         Subtask subtask = new Subtask(taskManager.getEpicById(epic.getId()).getId(), "Subtask test", "Description of Subtask test");
         taskManager.createNewSubtask(subtask);
