@@ -1,9 +1,10 @@
 package Interfaces;
 
-import Manager.ManagerSaveException;
+import Manager.Exeptions.SaveException;
 import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
+
 import java.util.List;
 
 public interface TaskManager {
@@ -48,5 +49,8 @@ public interface TaskManager {
 
     List<Task> getHistory();
 
-    void save() throws ManagerSaveException;
+    void save() throws SaveException;
+
+    void setTimeForEpic(Epic epic);
+    void updateEpicStatus(Epic epic);
 }
