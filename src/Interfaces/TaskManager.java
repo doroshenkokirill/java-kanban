@@ -1,6 +1,7 @@
 package Interfaces;
 
 import Manager.Exeptions.SaveException;
+import Manager.InMemoryTaskManager;
 import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
@@ -27,6 +28,8 @@ public interface TaskManager {
 
     void clearAllSubtasks();
 
+    boolean checkTasksTime(Task task);
+
     void updateTask(Task task);
 
     void updateSubtask(Subtask subtask);
@@ -51,6 +54,11 @@ public interface TaskManager {
 
     void save() throws SaveException;
 
+    List<Task> getPrioritizedTasks();
+
+    void checkTasks(Task task);
+
     void setTimeForEpic(Epic epic);
+
     void updateEpicStatus(Epic epic);
 }

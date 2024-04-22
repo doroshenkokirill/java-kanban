@@ -33,22 +33,6 @@ public class InMemoryTaskManager implements TaskManager {
         prioritizedTasks = new TreeSet<>(comparator);
     }
 
-    public List<Task> getPrioritizedTasks() {
-        return new ArrayList<>(prioritizedTasks);
-    }
-
-    public void checkTasks(Task task) {
-        if (checkTasksTime(task)) {
-            throw new TimeException("Задача пересекается по времени");
-        }
-    }
-
-    public void setTimeForEpic(Epic epic) {
-        setStartTimeForEpic(epic);
-        setDurationForEpic(epic);
-        setEndTimeForEpic(epic);
-    }
-
     private void setStartTimeForEpic(Epic epic) {
         for (Subtask someSubTask : getAllSubtasks()) {
             LocalDateTime someStartTime = someSubTask.getStartTime();
@@ -79,6 +63,26 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
+    @Override
+    public List<Task> getPrioritizedTasks() {
+        return new ArrayList<>(prioritizedTasks);
+    }
+
+    @Override
+    public void checkTasks(Task task) {
+        if (checkTasksTime(task)) {
+            throw new TimeException("Задача пересекается по времени");
+        }
+    }
+
+    @Override
+    public void setTimeForEpic(Epic epic) {
+        setStartTimeForEpic(epic);
+        setDurationForEpic(epic);
+        setEndTimeForEpic(epic);
+    }
+
+    @Override
     public void updateEpicStatus(Epic epic) {
         if (!epic.getSubtasksList().isEmpty()) {
             int statusNew = 0;
@@ -108,6 +112,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
+    @Override
     public boolean checkTasksTime(Task task) {
         if (getPrioritizedTasks().isEmpty()) {
             return false;

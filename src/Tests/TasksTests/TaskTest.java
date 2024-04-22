@@ -23,14 +23,13 @@ public class TaskTest {
     protected void add() { // Проверка создания Task`и
         taskManager.createNewTask(task);
         taskManager.createNewTask(task1);
-//        taskManager.createNewTask(task2);
         List<Task> history = taskManager.getAllTasks();
         assertEquals(2, history.size());
         assertEquals(Duration.ofMinutes(10), task.getDuration());
         task.setDuration(Duration.ofMinutes(20));
         assertEquals(Duration.ofMinutes(20), task.getDuration()); // перезапись задачи
         assertEquals("12:20 10.10.21", task.getEndTime().format(DATE_TIME_FORMATTER)); // проверка endTime
-        assertThrows(TimeException.class, () -> taskManager.createNewTask(task2));
+        assertThrows(TimeException.class, () -> taskManager.createNewTask(task2)); //добавляем Task с пересечением по времени
     }
 
     @Test

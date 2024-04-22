@@ -53,7 +53,7 @@ public class Epic extends Task {
 
     @Override
     public LocalDateTime getEndTime() {
-        if (this.endTime==null) return LocalDateTime.MIN;
+        if (this.endTime == null) return LocalDateTime.MIN;
         return endTime;
     }
 
