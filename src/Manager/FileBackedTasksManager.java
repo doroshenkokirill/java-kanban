@@ -2,12 +2,16 @@ package Manager;
 
 import Interfaces.HistoryManager;
 import Interfaces.TaskManager;
+import Manager.Exeptions.SaveException;
 import Tasks.*;
 
 import java.io.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static Tasks.Task.DATE_TIME_FORMATTER;
 import static Tasks.TaskTypesList.*;
 
 public class FileBackedTasksManager extends InMemoryTaskManager implements TaskManager {
@@ -41,22 +45,29 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         Task task;
         String[] elements = value.split(",");
         int id = Integer.parseInt(elements[0]);
-        TaskTypesList type = TaskTypesList.valueOf(elements[1]);
+        TaskTypesList type = valueOf(elements[1]);
         String name = elements[2];
         TaskStatusList status = TaskStatusList.valueOf(elements[3]);
         String description = elements[4];
+        String startTime = elements[5];
+        long duration = Long.parseLong(elements[6]);
+        String endTime = elements[7];
         int epicId;
         if (type.equals(TASK)) {
-            task = new Task(name, description);
+            task = new Task(name, description, startTime, duration);
             task.setId(id);
             task.setStatus(status);
         } else if (type.equals(EPIC)) {
             task = new Epic(name);
             task.setId(id);
             task.setStatus(status);
+            task.setDescription(description);
+            task.setStartTime(LocalDateTime.parse(startTime, DATE_TIME_FORMATTER));
+            task.setDuration(Duration.ofMinutes(duration));
+            task.setEndTime(LocalDateTime.parse(endTime, DATE_TIME_FORMATTER));
         } else {
-            epicId = Integer.parseInt(elements[5]);
-            task = new Subtask(epicId, name, description);
+            epicId = Integer.parseInt(elements[8]);
+            task = new Subtask(epicId, name, description, startTime, duration);
             task.setId(id);
             task.setStatus(status);
         }
@@ -81,41 +92,40 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         return historyId;
     }
 
-    public void save() throws ManagerSaveException {
+    public void save() throws SaveException {
         try (FileWriter fileWriter = new FileWriter(file)) {
             for (Task task : getAllTasks()) {
                 try {
-                    fileWriter.write(task.toStringForFile() + "\n"); //создал новый метод
+                    fileWriter.write(task.toString() + "\n"); //создал новый метод
                 } catch (IOException e) {
-                    throw new ManagerSaveException("Ошибка при записи", e);
+                    throw new SaveException("Ошибка при записи", e);
                 }
             }
             for (Epic epic : getAllEpics()) {
                 try {
-                    fileWriter.write(epic.toStringForFile() + "\n");
+                    fileWriter.write(epic.toString() + "\n");
                 } catch (IOException e) {
-                    throw new ManagerSaveException("Ошибка при записи", e);
+                    throw new SaveException("Ошибка при записи", e);
                 }
             }
             for (Subtask subtask: getAllSubtasks()) {
                 try {
-                    fileWriter.write(subtask.toStringForFile() + "\n");
+                    fileWriter.write(subtask.toString() + "\n");
                 } catch (IOException e) {
-                    throw new ManagerSaveException("Ошибка при записи", e);
+                    throw new SaveException("Ошибка при записи", e);
                 }
             }
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка при создании", e);
+            throw new SaveException("Ошибка при создании", e);
         }
     }
 
-    // Методы которые требуют сохранения в файл
     @Override
     public void createNewTask(Task task) {
         super.createNewTask(task);
         try {
             save();
-        } catch (ManagerSaveException e) {
+        } catch (SaveException e) {
             throw new RuntimeException(e);
         }
     }
@@ -125,7 +135,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         super.createNewSubtask(subtask);
         try {
             save();
-        } catch (ManagerSaveException e) {
+        } catch (SaveException e) {
             throw new RuntimeException(e);
         }
     }
@@ -135,7 +145,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         super.createNewEpic(epic);
         try {
             save();
-        } catch (ManagerSaveException e) {
+        } catch (SaveException e) {
             throw new RuntimeException(e);
         }
     }
@@ -145,7 +155,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         super.clearAllTasks();
         try {
             save();
-        } catch (ManagerSaveException e) {
+        } catch (SaveException e) {
             throw new RuntimeException(e);
         }
     }
@@ -155,7 +165,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         super.clearAllEpics();
         try {
             save();
-        } catch (ManagerSaveException e) {
+        } catch (SaveException e) {
             throw new RuntimeException(e);
         }
     }
@@ -165,7 +175,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         super.clearAllSubtasks();
         try {
             save();
-        } catch (ManagerSaveException e) {
+        } catch (SaveException e) {
             throw new RuntimeException(e);
         }
     }
@@ -175,7 +185,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         super.updateTask(task);
         try {
             save();
-        } catch (ManagerSaveException e) {
+        } catch (SaveException e) {
             throw new RuntimeException(e);
         }
     }
@@ -184,8 +194,10 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
     public void updateEpic(Epic epic) {
         super.updateEpic(epic);
         try {
+            getPrioritizedTasks().remove(epic);
             save();
-        } catch (ManagerSaveException e) {
+            getPrioritizedTasks().add(epic);
+        } catch (SaveException e) {
             throw new RuntimeException(e);
         }
     }
@@ -195,7 +207,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         super.updateSubtask(subtask);
         try {
             save();
-        } catch (ManagerSaveException e) {
+        } catch (SaveException e) {
             throw new RuntimeException(e);
         }
     }
@@ -205,7 +217,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         super.removeTaskById(Id);
         try {
             save();
-        } catch (ManagerSaveException e) {
+        } catch (SaveException e) {
             throw new RuntimeException(e);
         }
     }
@@ -215,7 +227,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         super.removeEpicById(Id);
         try {
             save();
-        } catch (ManagerSaveException e) {
+        } catch (SaveException e) {
             throw new RuntimeException(e);
         }
     }
@@ -225,7 +237,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         super.removeSubtaskById(Id);
         try {
             save();
-        } catch (ManagerSaveException e) {
+        } catch (SaveException e) {
             throw new RuntimeException(e);
         }
     }
