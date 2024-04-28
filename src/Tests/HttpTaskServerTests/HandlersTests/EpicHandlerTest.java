@@ -15,7 +15,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -107,32 +106,23 @@ public class EpicHandlerTest {
 
     @Test
     protected void getSubtasksByEpicIdWith200CodeTest() throws InterruptedException, IOException {
-        //POST Subtask
+        // создаём задачу 1
         String localDateTime = LocalDateTime.now(ZoneId.of("Europe/Moscow")).format(DATE_TIME_FORMATTER);
         Epic epic = new Epic("Epic Test");
-        epic.setId(1);
+        taskManager.createNewEpic(epic);
         Subtask task = new Subtask(epic.getId(), "Test", "Testing task", localDateTime, 5);
         task.setEndTime(task.getEndTime());
         String taskJson = gson.toJson(task);
         HttpClient client = HttpClient.newHttpClient();
-        URI uri = URI.create("http://localhost:" + PORT + "/subtasks");
+        URI uri = URI.create("http://localhost:" + PORT + "/subtasks/");
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
                 .POST(HttpRequest.BodyPublishers.ofString(taskJson))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         assertEquals(201, response.statusCode());
-        //POST Epic
-        String taskJson1 = gson.toJson(epic);
-        HttpClient client1 = HttpClient.newHttpClient();
-        URI uri1 = URI.create("http://localhost:" + PORT + "/epics");
-        HttpRequest request1 = HttpRequest.newBuilder()
-                .uri(uri1)
-                .POST(HttpRequest.BodyPublishers.ofString(taskJson1))
-                .build();
-        HttpResponse<String> response1 = client1.send(request1, HttpResponse.BodyHandlers.ofString());
-        assertEquals(201, response.statusCode());
 
+        // вызываем subtask`и по epicId
         HttpClient client2 = HttpClient.newHttpClient();
         URI uri2 = URI.create("http://localhost:" + PORT + "/epics/1/subtasks");
         HttpRequest request2 = HttpRequest.newBuilder()
@@ -140,7 +130,7 @@ public class EpicHandlerTest {
                 .GET()
                 .build();
         HttpResponse<String> response2 = client2.send(request2, HttpResponse.BodyHandlers.ofString());
-        assertEquals(404, response2.statusCode());
+        assertEquals(200, response2.statusCode());
     }
 
     @Test

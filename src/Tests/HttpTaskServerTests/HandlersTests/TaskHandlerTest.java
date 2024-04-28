@@ -107,7 +107,7 @@ public class TaskHandlerTest {
         task.setEndTime(task.getEndTime());
         String taskJson = gson.toJson(task);
         HttpClient client = HttpClient.newHttpClient();
-        URI uri = URI.create("http://localhost:" + PORT + "/tasks/");
+        URI uri = URI.create("http://localhost:" + PORT + "/tasks");
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
                 .POST(HttpRequest.BodyPublishers.ofString(taskJson))
@@ -119,7 +119,7 @@ public class TaskHandlerTest {
         task.setDuration(Duration.ofMinutes(10));
         String taskJson1 = gson.toJson(task);
         HttpClient client1 = HttpClient.newHttpClient();
-        URI uri1 = URI.create("http://localhost:" + PORT + "/tasks/");
+        URI uri1 = URI.create("http://localhost:" + PORT + "/tasks");
         HttpRequest request1 = HttpRequest.newBuilder()
                 .uri(uri1)
                 .POST(HttpRequest.BodyPublishers.ofString(taskJson1))
@@ -139,7 +139,7 @@ public class TaskHandlerTest {
 
         // создаём HTTP-клиент и запрос
         HttpClient client = HttpClient.newHttpClient();
-        URI uri = URI.create("http://localhost:" + PORT + "/tasks/");
+        URI uri = URI.create("http://localhost:" + PORT + "/tasks");
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
                 .POST(HttpRequest.BodyPublishers.ofString(taskJson))
@@ -156,6 +156,7 @@ public class TaskHandlerTest {
         // создаем задачу 1
         String localDateTime = "11:11 11.11.11";
         Task task = new Task("Test", "Testing task", localDateTime, 5);
+        task.setId(1);
         task.setEndTime(task.getEndTime());
         String taskJson = gson.toJson(task);
         HttpClient client = HttpClient.newHttpClient();
@@ -169,17 +170,16 @@ public class TaskHandlerTest {
 
         // создаем задачу c пересечением по времени
         String localDateTime1 = "11:12 11.11.11";
-        Task task1 = new Task("Test", "Testing task", localDateTime1, 5);
+        Task task1 = new Task("Test", "Testing task", localDateTime1, 10);
+        task1.setId(1);
         task1.setEndTime(task1.getEndTime());
         String taskJson1 = gson.toJson(task1);
 
-        HttpClient client1 = HttpClient.newHttpClient();
-        URI uri1 = URI.create("http://localhost:" + PORT + "/tasks/1");
         HttpRequest request1 = HttpRequest.newBuilder()
-                .uri(uri1)
+                .uri(uri)
                 .POST(HttpRequest.BodyPublishers.ofString(taskJson1))
                 .build();
-        HttpResponse<String> response1 = client1.send(request1, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response1 = client.send(request1, HttpResponse.BodyHandlers.ofString());
         assertEquals(406, response1.statusCode());
     }
     @Test

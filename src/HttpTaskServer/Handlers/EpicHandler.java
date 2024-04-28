@@ -57,7 +57,6 @@ public class EpicHandler implements HttpHandler {
                         } else {
                             int id = Integer.parseInt(path.split("/")[2]);
                             responseCode = 200;
-                            taskManager.createNewEpic(taskFromJson);
                             response = gson.toJson(taskManager.getSubtasksByEpicId(id));
                         }
                     } else if (path.equals("/epics")) {

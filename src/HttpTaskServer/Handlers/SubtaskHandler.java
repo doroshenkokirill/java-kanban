@@ -61,12 +61,11 @@ public class SubtaskHandler implements HttpHandler {
                 try {
                     Subtask subTaskFromJson = gson.fromJson(bodyString, Subtask.class);
                     if (subTaskFromJson.getId() == 0) {
-                        int epicId = subTaskFromJson.getEpicId();
+                        taskManager.createNewSubtask(subTaskFromJson);
                     } else {
                         taskManager.updateSubtask(subTaskFromJson);
                     }
                     responseCode = 201;
-                    taskManager.createNewSubtask(subTaskFromJson);
                     response = gson.toJson(taskManager.getSubtaskById(subTaskFromJson.getId()));
                     break;
                 } catch (TimeException exception) {

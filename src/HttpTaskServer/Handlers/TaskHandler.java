@@ -13,7 +13,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-public class TaskHandler extends BaseHttpHandler implements HttpHandler {
+public class TaskHandler implements HttpHandler {
     private final TaskManager taskManager;
     private final Gson gson;
 
@@ -59,7 +59,7 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
             case "POST":
                 try {
                     Task taskFromJson = gson.fromJson(bodyString, Task.class);
-                    if (taskFromJson.getId() == 0) {
+                    if (taskFromJson.getId() != 0) {
                         taskManager.createNewTask(taskFromJson);
                     } else {
                         taskManager.updateTask(taskFromJson);

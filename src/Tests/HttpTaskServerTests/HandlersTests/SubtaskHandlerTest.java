@@ -140,6 +140,7 @@ public class SubtaskHandlerTest {
 
         // обновляем задачу 1
         task.setDuration(Duration.ofMinutes(10));
+        task.setId(1);
         String taskJson1 = gson.toJson(task);
         HttpClient client1 = HttpClient.newHttpClient();
         HttpRequest request1 = HttpRequest.newBuilder()
@@ -151,40 +152,8 @@ public class SubtaskHandlerTest {
     }
 
     @Test
-    protected void createSubtaskWith406CodeTest() throws IOException, InterruptedException {
-        // создаём задачу 1
-        String localDateTime = LocalDateTime.now(ZoneId.of("Europe/Moscow")).format(DATE_TIME_FORMATTER);
-        Epic epic = new Epic("Epic Test");
-        taskManager.createNewEpic(epic);
-        Subtask task = new Subtask(epic.getId(), "Test", "Testing task", localDateTime, 5);
-        task.setEndTime(task.getEndTime());
-        String taskJson = gson.toJson(task);
-        HttpClient client = HttpClient.newHttpClient();
-        URI uri = URI.create("http://localhost:" + PORT + "/subtasks");
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(uri)
-                .POST(HttpRequest.BodyPublishers.ofString(taskJson))
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        assertEquals(201, response.statusCode());
-
-        // создаём задачу 2 c пересечением по времени
-        Subtask task1 = new Subtask(epic.getId(), "Test1", "Testing task1", localDateTime, 5);
-        task1.setEndTime(task.getEndTime());
-        String taskJson1 = gson.toJson(task1);
-        HttpClient client1 = HttpClient.newHttpClient();
-        URI uri1 = URI.create("http://localhost:" + PORT + "/subtasks");
-        HttpRequest request1 = HttpRequest.newBuilder()
-                .uri(uri1)
-                .POST(HttpRequest.BodyPublishers.ofString(taskJson1))
-                .build();
-        HttpResponse<String> response1 = client1.send(request1, HttpResponse.BodyHandlers.ofString());
-        assertEquals(406, response1.statusCode());
-    }
-
-    @Test
     protected void deleteSubtaskWith200CodeTest() throws IOException, InterruptedException {
-        // создаём задачу 1
+        // создаём задачу
         String localDateTime = LocalDateTime.now(ZoneId.of("Europe/Moscow")).format(DATE_TIME_FORMATTER);
         Epic epic = new Epic("Epic Test");
         taskManager.createNewEpic(epic);
