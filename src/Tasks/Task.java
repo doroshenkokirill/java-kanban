@@ -92,6 +92,4 @@ public class Task {
                 getStatus(), getDescription(), getStartTime().format(DATE_TIME_FORMATTER),
                 getDuration().toMinutes(), getEndTime().format(DATE_TIME_FORMATTER), "");
     }
-
-
 }

@@ -15,7 +15,9 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static java.lang.System.out;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FileBackedTasksManagerTest {

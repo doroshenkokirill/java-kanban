@@ -18,7 +18,6 @@ public class TaskTest {
     protected Task task1 = new Task("Task 2", "Description2", "12:40 10.10.21", 1);
     protected Task task2 = new Task("Task 3", "Description3", "12:40 10.10.21", 9);
 
-
     @Test
     protected void add() { // Проверка создания Task`и
         taskManager.createNewTask(task);

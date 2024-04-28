@@ -21,7 +21,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final HistoryManager historyManager = Manager.getDefaultHistory();
     private final Set<Task> prioritizedTasks;
 
-    public InMemoryTaskManager() {
+    {
         Comparator<Task> comparator = (t1, t2) -> {
             if (t1.getStartTime() == null) {
                 return 1;
