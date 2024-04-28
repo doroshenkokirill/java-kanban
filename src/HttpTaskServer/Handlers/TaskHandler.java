@@ -3,7 +3,6 @@ package HttpTaskServer.Handlers;
 import Interfaces.TaskManager;
 import Manager.Exeptions.SaveException;
 import Manager.Exeptions.TimeException;
-import Manager.InMemoryTaskManager;
 import Tasks.Task;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
@@ -15,20 +14,21 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 public class TaskHandler extends BaseHttpHandler implements HttpHandler {
-    TaskManager taskManager;
-    Gson gson;
+    private final TaskManager taskManager;
+    private final Gson gson;
 
     public TaskHandler(TaskManager taskManager, Gson gson) {
         this.taskManager = taskManager;
         this.gson = gson;
     }
+
     @Override
-    public void handle(HttpExchange httpExchange) throws IOException {
+    public void handle(HttpExchange exchange) throws IOException {
         System.out.println("Началась обработка /task запроса");
-        String method = httpExchange.getRequestMethod();
-        String path = httpExchange.getRequestURI().getPath();
-        String query = httpExchange.getRequestURI().getQuery();
-        InputStream inputStream = httpExchange.getRequestBody();
+        String method = exchange.getRequestMethod();
+        String path = exchange.getRequestURI().getPath();
+        String query = exchange.getRequestURI().getQuery();
+        InputStream inputStream = exchange.getRequestBody();
         String bodyString = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         int responseCode = 0;
         String response = "";
@@ -60,14 +60,12 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
                 try {
                     Task taskFromJson = gson.fromJson(bodyString, Task.class);
                     if (taskFromJson.getId() == 0) {
-                        responseCode = 201;
                         taskManager.createNewTask(taskFromJson);
-                        response = gson.toJson(taskManager.getTaskById(taskFromJson.getId()));
                     } else {
                         taskManager.updateTask(taskFromJson);
-                        responseCode = 201;
-                        response = gson.toJson(taskManager.getTaskById(taskFromJson.getId()));
                     }
+                    responseCode = 201;
+                    response = gson.toJson(taskManager.getTaskById(taskFromJson.getId()));
                     break;
                 } catch (TimeException exception) {
                     responseCode = 406;
@@ -85,9 +83,9 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
                 response = "Задача удалена";
                 break;
         }
-        httpExchange.sendResponseHeaders(responseCode, 0);
+        exchange.sendResponseHeaders(responseCode, 0);
 
-        try (OutputStream os = httpExchange.getResponseBody()) {
+        try (OutputStream os = exchange.getResponseBody()) {
             os.write(response.getBytes(StandardCharsets.UTF_8));
         }
         System.out.println("Код ответа: " + responseCode + "; тело ответа: " + response);

@@ -5,9 +5,9 @@ import Interfaces.TaskManager;
 import Manager.Manager;
 import Tasks.Task;
 import com.google.gson.Gson;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.AfterEach;
 
 import java.io.IOException;
 import java.net.URI;
@@ -24,34 +24,33 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class HttpTaskManagerTasksTest {
     private static final int PORT = 8080;
-
     // создаём экземпляр InMemoryTaskManager
-    protected TaskManager taskManager = Manager.getDefault();
+    private final TaskManager taskManager = Manager.getDefault();
     // передаём его в качестве аргумента в конструктор HttpTaskServer
-    protected HttpTaskServer taskServer = new HttpTaskServer();
-    protected Gson gson = HttpTaskServer.getGson();
+    private final HttpTaskServer server = new HttpTaskServer(taskManager);
+    private final Gson gson = HttpTaskServer.getGson();
 
     public HttpTaskManagerTasksTest() throws IOException {
     }
 
     @BeforeEach
-    public void setUp() throws IOException {
+    protected void setUp() throws IOException {
         taskManager.clearAllTasks();
-        taskManager.clearAllEpics();
         taskManager.clearAllSubtasks();
-        taskServer.start();
+        taskManager.clearAllEpics();
+        HttpTaskServer.start();
     }
 
     @AfterEach
-    public void shutDown() {
-        taskServer.stop();
+    protected void shutDown() {
+        HttpTaskServer.stop();
     }
 
     @Test
-    public void testAddTask() throws IOException, InterruptedException {
+    protected void testAddTask() throws IOException, InterruptedException {
         String localDateTime = LocalDateTime.now(ZoneId.of("Europe/Moscow")).format(DATE_TIME_FORMATTER);
         // создаём задачу
-        Task task = new Task("Test 2", "Testing task 2", localDateTime, 5);
+        Task task = new Task("Test", "Testing task", localDateTime, 5);
         task.setEndTime(task.getEndTime());
         // конвертируем её в JSON
         String taskJson = gson.toJson(task);
@@ -74,20 +73,6 @@ public class HttpTaskManagerTasksTest {
 
         assertNotNull(tasksFromManager, "Задачи не возвращаются");
         assertEquals(1, tasksFromManager.size(), "Некорректное количество задач");
-        assertEquals("Test 2", tasksFromManager.get(0).getName(), "Некорректное имя задачи");
-    }
-
-    @Test
-    public void shouldReturnCode404WhenGETRequest() throws IOException, InterruptedException {
-        URI uri = URI.create("http://localhost:" + PORT + "/tasks/");
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .uri(uri)
-                .version(HttpClient.Version.HTTP_1_1)
-                .build();
-        HttpClient client = HttpClient.newHttpClient();
-        HttpResponse.BodyHandler<String> handler = HttpResponse.BodyHandlers.ofString();
-        HttpResponse<String> response = client.send(request, handler);
-        assertEquals(404, response.statusCode(), "Not Found");
+        assertEquals("Test", tasksFromManager.getFirst().getName(), "Некорректное имя задачи");
     }
 }

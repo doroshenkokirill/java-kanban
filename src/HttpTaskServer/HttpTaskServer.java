@@ -3,25 +3,26 @@ package HttpTaskServer;
 import HttpTaskServer.Adapters.DurationAdapter;
 import HttpTaskServer.Adapters.LocalDateTimeAdapter;
 import HttpTaskServer.Handlers.*;
-import Manager.Manager;
+import Interfaces.TaskManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpServer;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-import static Manager.FileBackedTasksManager.loadFromFile;
-
 public class HttpTaskServer {
     private static final int PORT = 8080;
     private static HttpServer httpServer;
+    private static TaskManager taskManager;
+
+    public HttpTaskServer(TaskManager taskManager) {
+        HttpTaskServer.taskManager = taskManager;
+    }
 
     public static void main(String[] args) {
-
     }
 
     public static Gson getGson() {
@@ -31,21 +32,24 @@ public class HttpTaskServer {
         return gsonBuilder.create();
     }
 
-    public void start() throws IOException {
-        HttpServer httpServer = HttpServer.create();
+    public static void start() throws IOException {
+        httpServer = HttpServer.create();
         Gson gson = getGson();
         httpServer.bind(new InetSocketAddress(PORT), 0);
-        File file = File.createTempFile("tasksInfo", ".csv");
-        httpServer.createContext("/tasks", new TaskHandler(loadFromFile(file), gson));
-        httpServer.createContext("/subtasks", new SubtaskHandler());
-        httpServer.createContext("/epics", new EpicHandler());
-        httpServer.createContext("/history", new HistoryHandler());
-        httpServer.createContext("/prioritized", new PrioritizedHandler());
+        httpServer.createContext("/tasks", new TaskHandler(taskManager, gson));
+        httpServer.createContext("/subtasks", new SubtaskHandler(taskManager, gson));
+        httpServer.createContext("/epics", new EpicHandler(taskManager, gson));
+        httpServer.createContext("/history", new HistoryHandler(taskManager, gson));
+        httpServer.createContext("/prioritized", new PrioritizedHandler(taskManager, gson));
         httpServer.start();
         System.out.println("HTTP-сервер запущен на " + PORT + " порту!");
     }
 
-    public void stop() {
-        httpServer.stop(2);
+    public static void stop() {
+        httpServer.stop(0);
+    }
+
+    public TaskManager getTaskManager() {
+        return taskManager;
     }
 }
