@@ -27,9 +27,6 @@ public class HistoryHandlerTest {
     private final HttpTaskServer server = new HttpTaskServer(taskManager);
     private final Gson gson = HttpTaskServer.getGson();
 
-    protected HistoryHandlerTest() throws IOException {
-    }
-
     @BeforeEach
     protected void setUp() {
         taskManager.clearAllTasks();

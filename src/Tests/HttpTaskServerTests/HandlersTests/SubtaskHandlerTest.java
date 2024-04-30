@@ -30,9 +30,6 @@ public class SubtaskHandlerTest {
     private final HttpTaskServer server = new HttpTaskServer(taskManager);
     private final Gson gson = HttpTaskServer.getGson();
 
-    protected SubtaskHandlerTest() throws IOException {
-    }
-
     @BeforeEach
     protected void setUp() throws IOException {
         taskManager.clearAllTasks();

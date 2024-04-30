@@ -29,9 +29,6 @@ public class PrioritizedHandlerTest {
     private final HttpTaskServer server = new HttpTaskServer(taskManager);
     private final Gson gson = HttpTaskServer.getGson();
 
-    protected PrioritizedHandlerTest() throws IOException {
-    }
-
     @BeforeEach
     protected void setUp() {
         taskManager.clearAllTasks();

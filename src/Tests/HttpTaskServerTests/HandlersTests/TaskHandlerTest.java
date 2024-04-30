@@ -29,9 +29,6 @@ public class TaskHandlerTest {
     private final HttpTaskServer server = new HttpTaskServer(taskManager);
     private final Gson gson = HttpTaskServer.getGson();
 
-    protected TaskHandlerTest() throws IOException {
-    }
-
     @BeforeEach
     protected void setUp() throws IOException {
         taskManager.clearAllTasks();

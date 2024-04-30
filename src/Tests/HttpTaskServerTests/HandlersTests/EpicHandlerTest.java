@@ -29,8 +29,6 @@ public class EpicHandlerTest {
     private final HttpTaskServer server = new HttpTaskServer(taskManager);
     private final Gson gson = HttpTaskServer.getGson();
 
-    protected EpicHandlerTest() throws IOException {
-    }
     @BeforeEach
     protected void setUp() throws IOException {
         taskManager.clearAllTasks();
