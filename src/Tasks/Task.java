@@ -12,7 +12,6 @@ public class Task {
     private TaskStatusList status;
     private LocalDateTime startTime;
     private Duration duration;
-    private LocalDateTime endTime;
 
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd.MM.yy");
 
@@ -78,7 +77,6 @@ public class Task {
     }
 
     public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
     }
 
     public LocalDateTime getEndTime() {
@@ -92,6 +90,4 @@ public class Task {
                 getStatus(), getDescription(), getStartTime().format(DATE_TIME_FORMATTER),
                 getDuration().toMinutes(), getEndTime().format(DATE_TIME_FORMATTER), "");
     }
-
-
 }
